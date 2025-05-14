@@ -1,0 +1,99 @@
+Data Collection And Loading
+
+import pandas as pd
+
+# Load the COVID-19 dataset from Our World in Data
+try:
+    df = pd.read_csv('owid-covid-data.csv')
+    print("✅ Data loaded successfully.")
+except FileNotFoundError:
+    print("❌ Dataset not found. Please ensure 'owid-covid-data.csv' is in your working directory.")
+
+2. Data Exploration
+
+# Check the structure of the data
+print(df.columns)
+
+# Preview the data
+df.head()
+
+# Check for missing values
+df.isnull().sum()
+
+3. Data Cleaning
+
+# Convert date to datetime
+df['date'] = pd.to_datetime(df['date'])
+
+# Filter selected countries
+countries = ['Nigeria', 'India', 'United States']
+df = df[df['location'].isin(countries)]
+
+# Drop rows with missing total_cases
+df = df.dropna(subset=['total_cases'])
+
+# Fill other missing numeric values with 0 or use interpolate
+df.fillna(0, inplace=True)
+
+4. Exploratory Data Analysis (EDA)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Line chart - Total Cases Over Time
+plt.figure(figsize=(10,6))
+for country in countries:
+    subset = df[df['location'] == country]
+    plt.plot(subset['date'], subset['total_cases'], label=country)
+plt.title('Total COVID-19 Cases Over Time')
+plt.xlabel('Date')
+plt.ylabel('Total Cases')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Bar Chart - Total Deaths
+latest_date = df['date'].max()
+latest_data = df[df['date'] == latest_date]
+sns.barplot(x='location', y='total_deaths', data=latest_data)
+plt.title('Total COVID-19 Deaths by Country')
+plt.show()
+
+# Death Rate
+latest_data['death_rate'] = latest_data['total_deaths'] / latest_data['total_cases']
+print(latest_data[['location', 'death_rate']])
+
+5. Vaccination Analysis
+
+# Line chart - Total Vaccinations Over Time
+plt.figure(figsize=(10,6))
+for country in countries:
+    subset = df[df['location'] == country]
+    plt.plot(subset['date'], subset['total_vaccinations'], label=country)
+plt.title('Total COVID-19 Vaccinations Over Time')
+plt.xlabel('Date')
+plt.ylabel('Total Vaccinations')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+6. Insights & Conclusion
+
+### 📊 Key Insights
+
+- The United States has the highest total cases and deaths among the three countries.
+- India has the second-highest number of total cases but a lower death rate.
+- Nigeria shows lower overall numbers but also a slower vaccination rollout.
+- The death rate is highest in [Country], indicating potential healthcare challenges.
+
+🧰 Tools Used
+Python 3.x
+
+pandas
+
+matplotlib
+
+seaborn
+
+Jupyter Notebook
+
