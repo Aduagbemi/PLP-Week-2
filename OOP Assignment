@@ -1,0 +1,62 @@
+My own Class
+
+class Smartphone:
+    # Constructor to initialize the attributes
+    def __init__(self, brand, model, battery_life, color):
+        self.brand = brand
+        self.model = model
+        self.battery_life = battery_life
+        self.color = color
+        self.is_on = False  # Attribute to check if the phone is on or off
+
+    # Method to turn the phone on
+    def turn_on(self):
+        self.is_on = True
+        print(f"The {self.brand} {self.model} is now ON.")
+
+    # Method to turn the phone off
+    def turn_off(self):
+        self.is_on = False
+        print(f"The {self.brand} {self.model} is now OFF.")
+    
+    # Method to display the phone details
+    def display_info(self):
+        print(f"Smartphone Details:\nBrand: {self.brand}\nModel: {self.model}\nBattery Life: {self.battery_life} hours\nColor: {self.color}\n")
+        
+# Creating an instance of Smartphone
+phone = Smartphone("Apple", "iPhone 14", 20, "Midnight Black")
+phone.display_info()  # Displaying phone info
+phone.turn_on()  # Turning the phone on
+phone.turn_off()  # Turning the phone off
+
+Activity 2: Polymorphism Challenge! 🎭
+
+# Base class: Vehicle
+class Vehicle:
+    def move(self):
+        pass  # To be overridden by subclasses
+
+# Subclass: Car
+class Car(Vehicle):
+    def move(self):
+        print("Driving the car 🚗")
+
+# Subclass: Plane
+class Plane(Vehicle):
+    def move(self):
+        print("Flying the plane ✈️")
+
+# Subclass: Boat
+class Boat(Vehicle):
+    def move(self):
+        print("Sailing the boat ⛵")
+
+# Create instances of each vehicle
+car = Car()
+plane = Plane()
+boat = Boat()
+
+# Call move() method on each object
+car.move()   # Output: Driving the car 🚗
+plane.move()  # Output: Flying the plane ✈️
+boat.move()   # Output: Sailing the boat ⛵
