@@ -1,0 +1,77 @@
+# Assignment: Data Analysis and Visualization
+
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Error Handling: File reading
+try:
+    # Load the Iris dataset from seaborn's built-in datasets
+    iris = sns.load_dataset("iris")
+except Exception as e:
+    print(f"Error loading dataset: {e}")
+else:
+    # Task 1: Explore Dataset
+    print("First 5 rows of the dataset:")
+    print(iris.head())
+
+    print("\nData Types and Missing Values:")
+    print(iris.info())
+
+    print("\nChecking for Missing Values:")
+    print(iris.isnull().sum())
+
+    # Task 2: Basic Data Analysis
+    print("\nBasic Statistical Description:")
+    print(iris.describe())
+
+    print("\nGroup by species and calculate mean of numerical columns:")
+    grouped = iris.groupby("species").mean()
+    print(grouped)
+
+    # Task 3: Data Visualization
+
+    # Set style
+    sns.set(style="whitegrid")
+
+    # Line Chart: Simulating trend by plotting petal_length over index
+    plt.figure(figsize=(10, 5))
+    plt.plot(iris.index, iris["petal_length"], label="Petal Length")
+    plt.title("Line Chart: Petal Length Trend")
+    plt.xlabel("Index")
+    plt.ylabel("Petal Length")
+    plt.legend()
+    plt.show()
+
+    # Bar Chart: Average petal length per species
+    plt.figure(figsize=(8, 5))
+    sns.barplot(x="species", y="petal_length", data=iris)
+    plt.title("Bar Chart: Average Petal Length by Species")
+    plt.xlabel("Species")
+    plt.ylabel("Average Petal Length")
+    plt.show()
+
+    # Histogram: Distribution of sepal width
+    plt.figure(figsize=(8, 5))
+    plt.hist(iris["sepal_width"], bins=10, color='skyblue', edgecolor='black')
+    plt.title("Histogram: Sepal Width Distribution")
+    plt.xlabel("Sepal Width")
+    plt.ylabel("Frequency")
+    plt.show()
+
+    # Scatter Plot: Sepal length vs. Petal length
+    plt.figure(figsize=(8, 5))
+    sns.scatterplot(x="sepal_length", y="petal_length", hue="species", data=iris)
+    plt.title("Scatter Plot: Sepal Length vs Petal Length")
+    plt.xlabel("Sepal Length")
+    plt.ylabel("Petal Length")
+    plt.legend(title="Species")
+    plt.show()
+
+    # Observations
+    print("\nObservations:")
+    print("- Versicolor and virginica have longer petal lengths compared to setosa.")
+    print("- Sepal width is mostly between 2.5 and 4.0.")
+    print("- There is a positive correlation between sepal length and petal length.")
+    print("- Bar chart clearly shows distinct differences in petal length among species.")
